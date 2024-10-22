@@ -24,13 +24,13 @@ function App() {
       const newStudent = {
         name: studentName,
         code: studentCode,
-        status: isActive ? "Active" : "Inactive", // Status based on checkbox
+        status: isActive ? "Active" : "Inactive",
         selected: false,
       };
       setStudents([newStudent, ...students]);
       setStudentName("");
       setStudentCode("");
-      setIsActive(false); // Reset the checkbox
+      setIsActive(false);
     }
   };
 
@@ -41,7 +41,7 @@ function App() {
         ? {
             ...student,
             selected: !student.selected,
-            status: !student.selected ? "Active" : "Inactive", // Toggle status
+            status: !student.selected ? "Active" : "Inactive", 
           }
         : student
     );
