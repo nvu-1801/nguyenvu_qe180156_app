@@ -18,23 +18,23 @@ function App() {
   const [studentCode, setStudentCode] = useState("");
   const [isActive, setIsActive] = useState(false);
 
-  // Add student with default "Inactive" status
+  // Add student with dynamic status based on isActive state
   const handleAddStudent = () => {
     if (studentName && studentCode) {
       const newStudent = {
         name: studentName,
         code: studentCode,
-        status: "In-active", // Default status is Inactive
+        status: isActive ? "Active" : "Inactive", // Status based on checkbox
         selected: false,
       };
       setStudents([newStudent, ...students]);
       setStudentName("");
       setStudentCode("");
-      setIsActive(false);
+      setIsActive(false); // Reset the checkbox
     }
   };
 
-  // Toggle student selection and status when checkbox is clicked
+  // Toggle student selection and update status
   const handleSelectStudent = (index) => {
     const updatedStudents = students.map((student, i) =>
       i === index
@@ -48,7 +48,7 @@ function App() {
     setStudents(updatedStudents);
   };
 
-  // Delete student from the list
+  // Delete a student from the list
   const handleDeleteStudent = (index) => {
     const updatedStudents = students.filter((_, i) => i !== index);
     setStudents(updatedStudents);
@@ -78,17 +78,24 @@ function App() {
 
         <Row className="mt-5">
           <Col>
-            <FormControl
-              placeholder="Student Name"
-              value={studentName}
-              onChange={(e) => setStudentName(e.target.value)}
-            />
-            <FormControl
-              placeholder="Student Code"
-              className="mt-2"
-              value={studentCode}
-              onChange={(e) => setStudentCode(e.target.value)}
-            />
+            <Form.Group className="mb-3">
+              <Form.Label style={{ fontWeight: 'bold' }}>Student Name</Form.Label>
+              <FormControl
+                placeholder="Enter student name"
+                value={studentName}
+                onChange={(e) => setStudentName(e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label style={{ fontWeight: 'bold' }}>Student Code</Form.Label>
+              <FormControl
+                placeholder="Enter student code"
+                className="mt-2"
+                value={studentCode}
+                onChange={(e) => setStudentCode(e.target.value)}
+              />
+            </Form.Group>
             <Form.Check
               type="checkbox"
               label="Still Active"
@@ -137,8 +144,8 @@ function App() {
                       style={{
                         padding: "8px 12px",
                         fontSize: "14px",
-                        opacity: student.status === "Active" ? 1 : 0.5, // Faded if inactive
-                        transition: "opacity 0.3s ease-in-out", // Smooth transition
+                        opacity: student.status === "Active" ? 1 : 0.5,
+                        transition: "opacity 0.3s ease-in-out",
                       }}
                     >
                       {student.status}
